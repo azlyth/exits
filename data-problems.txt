@@ -1,0 +1,5 @@
+- nyc-subway-entrance.csv
+  - the station latitudes and longitudes for each exit are usually the same, but its not true for the following
+    - "Canarsie - Rockaway Parkway"
+    - "Brooklyn Bridge-City Hall"
+    - "Chambers St"
