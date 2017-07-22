@@ -9,4 +9,4 @@ RUN pip install -r /root/requirements.txt
 # Overlay project files onto the filesystem
 ADD filesystem /
 
-CMD /root/main.py
+ENTRYPOINT ["/root/main.py"]

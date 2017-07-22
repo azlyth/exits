@@ -1,13 +1,10 @@
 .PHONY = build run
-PROJECT_NAME = new-python-project
+PROJECT_NAME = subway-exit-data
 
 all: build run
 
 build:
 	@docker build -t $(PROJECT_NAME) image/
-
-run:
-	@docker run --rm -v $(shell pwd)/data:/data $(PROJECT_NAME)
 
 shell:
 	@docker run --rm -it -v $(shell pwd)/data:/data $(PROJECT_NAME) sh
@@ -18,3 +15,6 @@ silent-build:
 keep-running:
 	@#Relies on the vim-hook script to write to output.txt
 	@watch -n0.5 cat output.txt
+
+map-data:
+	@docker run --rm -v $(shell pwd)/data:/data $(PROJECT_NAME) map-data

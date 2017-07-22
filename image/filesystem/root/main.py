@@ -4,6 +4,7 @@ from pprint import pprint
 from collections import defaultdict
 from functools import partial
 
+import click
 import geojson
 from geojson import Feature, FeatureCollection, Point
 
@@ -77,11 +78,18 @@ def export_to_geojson(subway_line_stations):
     print(geojson.dumps(collection))
 
 
-
-def main():
+@click.group()
+@click.pass_context
+def cli(context):
     exits = load_all_exits()
-    subway_line_stations = group_by_line_and_station(exits)
-    export_to_geojson(subway_line_stations)
+    context.obj['subway_line_stations'] = group_by_line_and_station(exits)
+
+
+@cli.command('map-data')
+@click.pass_context
+def map_data(context):
+    export_to_geojson(context.obj['subway_line_stations'])
+
 
 if __name__ == '__main__':
-    main()
+    cli(obj={})
