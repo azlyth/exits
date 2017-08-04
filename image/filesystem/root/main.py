@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import csv
+import json
 from pprint import pprint
 from collections import defaultdict
 from functools import partial
@@ -58,7 +59,7 @@ def check_station_latitudes(subway_line_stations):
                 print(entrance_latitudes)
                 print()
 
-def export_to_geojson(subway_line_stations):
+def print_geojson(subway_line_stations):
     features = []
 
     for line, stations in subway_line_stations.items():
@@ -78,6 +79,35 @@ def export_to_geojson(subway_line_stations):
     print(geojson.dumps(collection))
 
 
+def get_station_lines(exit):
+    line_fields = ['Route{}'.format(i) for i in range(1, 12)]
+
+    lines = []
+    for field in line_fields:
+        line = exit[field]
+        if line:
+            lines.append(line)
+
+    return lines
+
+def all_station_coordinates(subway_line_stations):
+    station_coordinates = {}
+
+    for line, stations in subway_line_stations.items():
+        for station, exits in stations.items():
+            arbitrary_exit = exits[0]
+            lines = get_station_lines(arbitrary_exit)
+            station_key = "{} ({})".format(station, ' '.join(lines))
+            coordinates = {
+                'longitude': arbitrary_exit['Station Longitude'],
+                'latitude': arbitrary_exit['Station Latitude']
+            }
+
+            station_coordinates[station_key] = coordinates
+
+    return station_coordinates
+
+
 @click.group()
 @click.pass_context
 def cli(context):
@@ -85,10 +115,17 @@ def cli(context):
     context.obj['subway_line_stations'] = group_by_line_and_station(exits)
 
 
-@cli.command('map-data')
+@cli.command('map-geojson')
 @click.pass_context
 def map_data(context):
-    export_to_geojson(context.obj['subway_line_stations'])
+    print_geojson(context.obj['subway_line_stations'])
+
+
+@cli.command('frontend-json')
+@click.pass_context
+def frontend_data(context):
+    station_coords = all_station_coordinates(context.obj['subway_line_stations'])
+    print(json.dumps(station_coords))
 
 
 if __name__ == '__main__':

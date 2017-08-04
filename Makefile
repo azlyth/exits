@@ -16,5 +16,8 @@ keep-running:
 	@#Relies on the vim-hook script to write to output.txt
 	@watch -n0.5 cat output.txt
 
-map-data:
-	@docker run --rm -v $(shell pwd)/data:/data $(PROJECT_NAME) map-data
+map-geojson:
+	@docker run --rm -v $(shell pwd)/data:/data $(PROJECT_NAME) map-geojson
+
+frontend-json:
+	@docker run --rm -v $(shell pwd)/data:/data $(PROJECT_NAME) frontend-json
