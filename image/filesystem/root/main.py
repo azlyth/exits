@@ -20,6 +20,21 @@ PROPERTIES = [
     'Entrance Longitude',
 ]
 
+# Correction structure:
+# Exits from the first station should be place in the second station
+CORRECTIONS = (
+    (('Nassau', 'Essex St'), ('6 Avenue', 'Delancey St')),
+    (('4 Avenue', '9th St'), ('6 Avenue', '4th Av')),
+    (('Broadway', 'Lawrence St'), ('Fulton', 'Jay St - Borough Hall')),
+)
+
+
+def correct(line, station_name):
+    for incorrect, correct in CORRECTIONS:
+        if (line, station_name) == incorrect:
+            return correct
+    return (line, station_name)
+
 
 def pluck(d, fields):
     return {f: d[f] for f in fields}
@@ -37,7 +52,7 @@ def group_by_line_and_station(exits):
     subway_line_stations = defaultdict(listdict_creator)
 
     for exit in exits:
-        line, station_name = exit['Line'], exit['Station Name']
+        line, station_name = correct(exit['Line'], exit['Station Name'])
         subway_line_stations[line][station_name].append(exit)
 
     return subway_line_stations
