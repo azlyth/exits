@@ -76,7 +76,7 @@ def print_geojson(subway_line_stations):
                 features.append(Feature(geometry=point, properties=properties))
 
     collection = FeatureCollection(features)
-    print(geojson.dumps(collection))
+    print(geojson.dumps(collection, indent=2))
 
 
 def get_station_lines(exit):
