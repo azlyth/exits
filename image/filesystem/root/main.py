@@ -23,9 +23,35 @@ PROPERTIES = [
 # Correction structure:
 # Exits from the first station should be place in the second station
 CORRECTIONS = (
-    (('Nassau', 'Essex St'), ('6 Avenue', 'Delancey St')),
-    (('4 Avenue', '9th St'), ('6 Avenue', '4th Av')),
-    (('Broadway', 'Lawrence St'), ('Fulton', 'Jay St - Borough Hall')),
+    (('Nassau', 'Essex St'),
+     ('6 Avenue', 'Delancey St')),
+
+    (('4 Avenue', '9th St'),
+     ('6 Avenue', '4th Av')),
+
+    (('Broadway', 'Lawrence St'),
+     ('Fulton', 'Jay St - Borough Hall')),
+
+    (('8 Avenue', '59th St'),
+     ('Broadway-7th Ave', '59th St-Columbus Circle')),
+
+    (('Flushing', '5th Av'),
+     ('6 Avenue', '42nd St')),
+
+    (('42nd St Shuttle', 'Times Square'),
+     ('Broadway-7th Ave', 'Times Square')),
+
+    (('Broadway', 'Times Square-42nd St'),
+     ('Broadway-7th Ave', 'Times Square')),
+
+    (('8 Avenue', '42nd St'),
+     ('Broadway-7th Ave', 'Times Square')),
+
+    (('42nd St Shuttle', 'Grand Central'),
+     ('Lexington', 'Grand Central-42nd St')),
+
+    (('Flushing', 'Grand Central-42nd St'),
+     ('Lexington', 'Grand Central-42nd St')),
 )
 
 
